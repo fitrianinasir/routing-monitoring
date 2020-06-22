@@ -1,0 +1,30 @@
+.filter-form-body{
+  margin-Top: -1rem;
+  left: 0.5rem;
+  font-size: 12px;
+  color: #838383;
+  margin-right: 2rem;
+}
+
+.filter-input-info{
+  display:block;
+  font-size: 10px;
+}
+
+.filter-input{
+  margin-top: 10px;
+}
+
+::placeholder{
+  font-size: 11px;
+  font-style: italic;
+}
+@media(min-width:1024px){
+  .filter-form-body{
+    width: 35rem;
+    margin-Top: -1rem;
+    left: 0.5rem;
+    font-size: 12px;
+    color: #838383;    
+  }
+}
