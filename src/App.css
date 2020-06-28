@@ -36,3 +36,108 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* FILTER PAGE COMPONENT START */
+.option-item{
+  width: 7rem;
+  padding: 5px;
+  font-size: 14px !important;
+  border-radius: 10px;
+  background-color: #EDEDED;
+  color: #838383;
+  border:none;
+  margin-bottom: 5px;
+}
+
+/* FILTER PAGE COMPONENT END */
+
+/* FILTER NAVBAR COMPONENT START */
+
+.filter-button{
+  background-color: transparent;
+  width: 6rem;
+  padding: 10px;
+  border: 1px solid #C6C6C6;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-left: 2rem;
+}
+
+/* FILTER NAVBAR COMPONENT END */
+
+/* FILTER FORM COMPONENT START */
+.filter-form-body{
+  left: 0.5rem;
+  font-size: 12px;
+  color: #838383;
+  margin: -1rem 2rem 5rem 0;
+}
+
+.filter-form-body table{
+  margin-left: -1rem;
+}
+
+.filter-input{
+  margin-top: 10px;
+}
+
+::placeholder{
+  font-size: 11px;
+  font-style: italic;
+}
+
+.filter-input-info{
+  display:block;
+  font-size: 10px;
+}
+
+.multi-select{
+  width: 10rem;
+}
+
+.sweet-loading{
+  margin-top: -17rem;
+  padding: 80% 0 0 40%;
+  position: relative;
+  height: 102vh;
+  display: block;
+  background-color: rgba(89, 89, 89, 0.9);
+  transition: background-color 2s;
+}
+
+@media(min-width:1024px){
+  .filter-form-body{
+    width: 35rem;
+    margin-Top: -1rem;
+    left: 0.5rem;
+    font-size: 14px;
+    color: #838383;    
+  }
+
+  .filter-input{
+    margin-top: 10px;
+    height: 2.3rem;
+  }
+
+  .multi-select{
+    width: 25rem;
+  }
+
+  ::placeholder{
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  .sweet-loading{
+    margin-top: -14rem;
+    padding: 20% 0 0 48%;
+    position: relative;
+    height: 100vh;
+    display: block;
+    background-color: rgba(89, 89, 89, 0.9);
+    transition: background-color 2s;
+  }
+  
+}
+/* FILTER FORM COMPONENT END  */

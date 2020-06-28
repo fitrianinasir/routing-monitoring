@@ -1,6 +1,6 @@
 import React from "react";
-import "./FilterNavbar.css";
 import FilterForm from "../FIlterForm/FilterForm";
+
 function FilterNavbar(props) {
   return (
     <div>

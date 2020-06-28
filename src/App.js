@@ -1,16 +1,19 @@
-import React from 'react';
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import './App.css';
-import FilterPage from './Components/FilterPage/FilterPage';
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import FilterPage from "./Components/FilterPage/FilterPage";
+import FilterData from "./Components/FilterData/FilterData";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/filter-page" component={FilterPage}/>
-        </Switch>
-      </BrowserRouter>
+      <FilterData>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/filter-page" component={FilterPage} />
+          </Switch>
+        </BrowserRouter>
+      </FilterData>
     </div>
   );
 }
