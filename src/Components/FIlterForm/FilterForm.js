@@ -14,6 +14,14 @@ function FilterForm(props) {
     managerData,
     choosenManager,
     setChoosenManager,
+    setTripKeyword,
+    tripData,
+    choosenTrip,
+    setChoosenTrip,
+    setSupplierKeyword,
+    supplierData, 
+    choosenSupplier,
+    setChoosenSupplier
   } = useContext(dataContainer);
 
   return (
@@ -33,7 +41,7 @@ function FilterForm(props) {
                   labelledBy={"Select"}
                   hasSelectAll={false}
                   filterOptions={(options, filter) => {
-                    if (filter.length >= 4) {
+                    if (filter.length >= 3) {
                       setEmployeeKeyword(filter);
                       return salesData;
                     }
@@ -57,7 +65,7 @@ function FilterForm(props) {
                   labelledBy={"Select"}
                   hasSelectAll={false}
                   filterOptions={(options, filter) => {
-                    if (filter.length >= 4) {
+                    if (filter.length >= 3) {
                       setEmployeeKeyword(filter);
                       return supervisorData;
                     }
@@ -81,7 +89,7 @@ function FilterForm(props) {
                   labelledBy={"Select"}
                   hasSelectAll={false}
                   filterOptions={(options, filter) => {
-                    if (filter.length >= 4) {
+                    if (filter.length >= 3) {
                       setEmployeeKeyword(filter);
                       return managerData;
                     }
@@ -99,15 +107,15 @@ function FilterForm(props) {
               </td>
               <td>
                 <MultiSelect
-                  options={managerData}
-                  value={choosenManager}
-                  onChange={setChoosenManager}
+                  options={tripData}
+                  value={choosenTrip}
+                  onChange={setChoosenTrip}
                   labelledBy={"Select"}
                   hasSelectAll={false}
                   filterOptions={(options, filter) => {
-                    if (filter.length >= 4) {
-                      setEmployeeKeyword(filter);
-                      return managerData;
+                    if (filter.length >= 3) {
+                      setTripKeyword(filter);
+                      return tripData;
                     }
                     return [];
                   }}
@@ -124,15 +132,15 @@ function FilterForm(props) {
               </td>
               <td>
                 <MultiSelect
-                  options={managerData}
-                  value={choosenManager}
-                  onChange={setChoosenManager}
+                  options={supplierData}
+                  value={choosenSupplier}
+                  onChange={setChoosenSupplier}
                   labelledBy={"Select"}
                   hasSelectAll={false}
                   filterOptions={(options, filter) => {
-                    if (filter.length >= 4) {
-                      setEmployeeKeyword(filter);
-                      return managerData;
+                    if (filter.length >= 3) {
+                      setSupplierKeyword(filter);
+                      return supplierData;
                     }
                     return [];
                   }}
@@ -144,9 +152,7 @@ function FilterForm(props) {
             </tr>
           </tbody>
         </table>
-        <button
-          className="btn btn-primary float-right mt-4 mr-2"
-        >
+        <button className="btn btn-primary float-right mt-4 mr-2">
           Terapkan Filter
         </button>
       </form>

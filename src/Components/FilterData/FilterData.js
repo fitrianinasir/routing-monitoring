@@ -3,27 +3,29 @@ import axios from "axios";
 
 export const dataContainer = createContext();
 function FilterData(props) {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   // const [tableData, setTableData] = useState({});
   const [employeeKeyword, setEmployeeKeyword] = useState("");
-  const [tripKeyword, setTripKeyword] = useState('')
-  const [supplierKeyword, setSupplierKeyword] = useState('')
+  const [tripKeyword, setTripKeyword] = useState("");
+  const [supplierKeyword, setSupplierKeyword] = useState("");
   const [salesData, setSalesData] = useState([]);
   const [supervisorData, setSupervisorData] = useState([]);
   const [managerData, setManagerData] = useState([]);
-  const [tripData, setTripData] = useState([])
+  const [tripData, setTripData] = useState([]);
+  const [supplierData, setSupplierData] = useState([])
   const [choosenSales, setChoosenSales] = useState([]);
   const [choosenSupervisor, setChoosenSupervisor] = useState([]);
   const [choosenManager, setChoosenManager] = useState([]);
-  const [choosenTrip, setChoosenTrip] = useState([])
+  const [choosenTrip, setChoosenTrip] = useState([]);
+  const [choosenSupplier, setChoosenSupplier] = useState([])
 
   const API_URL =
     "https://route-monitoring.carakde.id/api_route_monitoring/api/v1";
 
   useEffect(() => {
     // GET EMPLOYEES DATA
-    if (employeeKeyword.length >= 4) {    
-      setLoading(true)
+    if (employeeKeyword.length >=3) {
+      setLoading(true);
       axios
         .get(`${API_URL}/employees/search?keyword=${employeeKeyword}`)
         .then((res) => {
@@ -55,9 +57,39 @@ function FilterData(props) {
             value: employee.id,
             label: employee.name,
           }));
-          console.log(managers);
           setManagerData(managers);
-          setLoading(false)
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
+    } 
+    
+    if (tripKeyword.length >=3) {
+      setLoading(true);
+      axios
+        .get(`${API_URL}/trips/search?code=${tripKeyword}`)
+        .then((res) => {
+          let trips = res.data.trips.map((trip) => ({
+            value: trip.id,
+            label: trip.Kd_DSJP,
+          }));
+          setTripData(trips);
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if(supplierKeyword.length>=3){
+      setLoading(true);
+      axios
+        .get(`${API_URL}/suppliers/search?code=${supplierKeyword}`)
+        .then((res) => {
+          console.log(res)
+          let suppliers = res.data.suppliers.map((supplier) => ({
+            value: supplier.id,
+            label: supplier.name,
+          }));
+          setSupplierData(suppliers);
+          setLoading(false);
         })
         .catch((err) => console.log(err));
     }
@@ -66,15 +98,9 @@ function FilterData(props) {
 
     // GET TRIP DATA
 
-    // axios.get(`${API_URL}/trips/search?code=AUL`).then(res => {
-      
-    // })
-
     // ----------------------------------------------------------------
 
     // GET SUPLIER DATA
-
-    
 
     // ----------------------------------------------------------------
 
@@ -94,13 +120,15 @@ function FilterData(props) {
     //     setTableData(res);
     //   })
     //   .catch((err) => {});
-  }, [employeeKeyword]);
+  }, [employeeKeyword, tripKeyword, supplierKeyword]);
 
   return (
     <div>
       <dataContainer.Provider
         value={{
           loading,
+
+          // employee
           setEmployeeKeyword,
           salesData,
           choosenSales,
@@ -111,6 +139,18 @@ function FilterData(props) {
           managerData,
           choosenManager,
           setChoosenManager,
+
+          // trip
+          setTripKeyword,
+          tripData,
+          choosenTrip,
+          setChoosenTrip,
+
+          // supplier
+          setSupplierKeyword,
+          supplierData,
+          choosenSupplier,
+          setChoosenSupplier
         }}
       >
         {props.children}
