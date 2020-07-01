@@ -5,55 +5,71 @@ export const dataContainer = createContext();
 function FilterData(props) {
   const [loading, setLoading] = useState(false);
   // const [tableData, setTableData] = useState({});
-  const [employeeKeyword, setEmployeeKeyword] = useState("");
+  const [salesKeyword, setSalesKeyword] = useState("");
+  const [supervisorKeyword, setSupervisorKeyword] = useState("");
+  const [managerKeyword, setManagerKeyword] = useState("");
   const [tripKeyword, setTripKeyword] = useState("");
   const [supplierKeyword, setSupplierKeyword] = useState("");
   const [salesData, setSalesData] = useState([]);
   const [supervisorData, setSupervisorData] = useState([]);
   const [managerData, setManagerData] = useState([]);
   const [tripData, setTripData] = useState([]);
-  const [supplierData, setSupplierData] = useState([])
+  const [supplierData, setSupplierData] = useState([]);
   const [choosenSales, setChoosenSales] = useState([]);
   const [choosenSupervisor, setChoosenSupervisor] = useState([]);
   const [choosenManager, setChoosenManager] = useState([]);
   const [choosenTrip, setChoosenTrip] = useState([]);
-  const [choosenSupplier, setChoosenSupplier] = useState([])
+  const [choosenSupplier, setChoosenSupplier] = useState([]);
 
   const API_URL =
     "https://route-monitoring.carakde.id/api_route_monitoring/api/v1";
 
   useEffect(() => {
-    // GET EMPLOYEES DATA
-    if (employeeKeyword.length >=3) {
+    // GET SALESMAN DATA
+    if (salesKeyword.length >= 3) {
       setLoading(true);
       axios
-        .get(`${API_URL}/employees/search?keyword=${employeeKeyword}`)
+        .get(
+          `${API_URL}/employees/search_by_position?keyword=${salesKeyword}&type=Salesman`
+        )
         .then((res) => {
-          // GET SALESMAN DATA
-          let salesmanFilter = res.data.employees.filter(
-            (employee) => employee.position.name === "Salesman"
-          );
-          let salesman = salesmanFilter.map((employee) => ({
+          let salesman = res.data.employees.map((employee) => ({
             value: employee.id,
             label: employee.name,
           }));
           setSalesData(salesman);
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }
 
-          // GET SUPERVISOR DATA
-          let supervisorFilter = res.data.employees.filter(
-            (employee) => employee.position.name === "Supervisor"
-          );
-          let supervisors = supervisorFilter.map((employee) => ({
+    // GET SUPERVISOR DATA
+    if (supervisorKeyword.length >= 3) {
+      setLoading(true);
+      axios
+        .get(
+          `${API_URL}/employees/search_by_position?keyword=${supervisorKeyword}&type=Supervisor`
+        )
+        .then((res) => {
+          let supervisors = res.data.employees.map((employee) => ({
             value: employee.id,
             label: employee.name,
           }));
           setSupervisorData(supervisors);
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }
 
-          // GET MANAGER DATA
-          let managerFilter = res.data.employees.filter(
-            (employee) => employee.position.name === "Manager"
-          );
-          let managers = managerFilter.map((employee) => ({
+    // GET MANAGER DATA
+    if (managerKeyword.length >= 3) {
+      setLoading(true);
+      axios
+        .get(
+          `${API_URL}/employees/search_by_position?keyword=${managerKeyword}&type=Manager`
+        )
+        .then((res) => {
+          let managers = res.data.employees.map((employee) => ({
             value: employee.id,
             label: employee.name,
           }));
@@ -61,9 +77,9 @@ function FilterData(props) {
           setLoading(false);
         })
         .catch((err) => console.log(err));
-    } 
-    
-    if (tripKeyword.length >=3) {
+    }
+
+    if (tripKeyword.length >= 3) {
       setLoading(true);
       axios
         .get(`${API_URL}/trips/search?code=${tripKeyword}`)
@@ -78,12 +94,12 @@ function FilterData(props) {
         .catch((err) => console.log(err));
     }
 
-    if(supplierKeyword.length>=3){
+    if (supplierKeyword.length >= 3) {
       setLoading(true);
       axios
         .get(`${API_URL}/suppliers/search?code=${supplierKeyword}`)
         .then((res) => {
-          console.log(res)
+          console.log(res);
           let suppliers = res.data.suppliers.map((supplier) => ({
             value: supplier.id,
             label: supplier.name,
@@ -93,43 +109,17 @@ function FilterData(props) {
         })
         .catch((err) => console.log(err));
     }
-
-    // ----------------------------------------------------------------
-
-    // GET TRIP DATA
-
-    // ----------------------------------------------------------------
-
-    // GET SUPLIER DATA
-
-    // ----------------------------------------------------------------
-
-    // GET MERCHANDISES
-    // axios
-    //   .request({
-    //     method: "GET",
-    //     url: `${API_URL}/merchandises`,
-    //     params: {
-    //       date_from: "2018-12-03",
-    //       date_to: "2018-12-17",
-    //       depo_id: 4,
-    //       group_by: ["Nama_Manager", "Nama_Supervisor", "Nama_Sales"],
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setTableData(res);
-    //   })
-    //   .catch((err) => {});
-  }, [employeeKeyword, tripKeyword, supplierKeyword]);
+  }, [salesKeyword, supervisorKeyword, managerKeyword, tripKeyword, supplierKeyword]);
 
   return (
     <div>
       <dataContainer.Provider
         value={{
           loading,
-
           // employee
-          setEmployeeKeyword,
+          setSalesKeyword,
+          setSupervisorKeyword,
+          setManagerKeyword,
           salesData,
           choosenSales,
           setChoosenSales,
@@ -150,7 +140,7 @@ function FilterData(props) {
           setSupplierKeyword,
           supplierData,
           choosenSupplier,
-          setChoosenSupplier
+          setChoosenSupplier,
         }}
       >
         {props.children}

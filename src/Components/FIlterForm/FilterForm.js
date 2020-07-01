@@ -4,7 +4,9 @@ import { dataContainer } from "../FilterData/FilterData";
 
 function FilterForm(props) {
   const {
-    setEmployeeKeyword,
+    setSalesKeyword,
+    setSupervisorKeyword,
+    setManagerKeyword,
     salesData,
     choosenSales,
     setChoosenSales,
@@ -19,11 +21,12 @@ function FilterForm(props) {
     choosenTrip,
     setChoosenTrip,
     setSupplierKeyword,
-    supplierData, 
+    supplierData,
     choosenSupplier,
-    setChoosenSupplier
+    setChoosenSupplier,
   } = useContext(dataContainer);
 
+  console.log(salesData);
   return (
     <div className="card card-body shadow ml-5 filter-form-body">
       <form action="">
@@ -42,7 +45,7 @@ function FilterForm(props) {
                   hasSelectAll={false}
                   filterOptions={(options, filter) => {
                     if (filter.length >= 3) {
-                      setEmployeeKeyword(filter);
+                      setSalesKeyword(filter);
                       return salesData;
                     }
                     return [];
@@ -66,7 +69,7 @@ function FilterForm(props) {
                   hasSelectAll={false}
                   filterOptions={(options, filter) => {
                     if (filter.length >= 3) {
-                      setEmployeeKeyword(filter);
+                      setSupervisorKeyword(filter);
                       return supervisorData;
                     }
                     return [];
@@ -90,7 +93,7 @@ function FilterForm(props) {
                   hasSelectAll={false}
                   filterOptions={(options, filter) => {
                     if (filter.length >= 3) {
-                      setEmployeeKeyword(filter);
+                      setManagerKeyword(filter);
                       return managerData;
                     }
                     return [];
