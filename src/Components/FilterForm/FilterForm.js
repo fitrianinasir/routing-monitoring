@@ -24,9 +24,10 @@ function FilterForm(props) {
     supplierData,
     choosenSupplier,
     setChoosenSupplier,
+    requestFilter
   } = useContext(dataContainer);
 
-  console.log(salesData);
+  
   return (
     <div className="card card-body shadow ml-5 filter-form-body">
       <form action="">
@@ -155,7 +156,7 @@ function FilterForm(props) {
             </tr>
           </tbody>
         </table>
-        <button className="btn btn-primary float-right mt-4 mr-2">
+        <button className="btn btn-primary float-right mt-4 mr-2" onClick={requestFilter}>
           Terapkan Filter
         </button>
       </form>

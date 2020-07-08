@@ -56,9 +56,9 @@
 
 .filter-button{
   background-color: transparent;
-  width: 6rem;
-  padding: 10px;
-  border: 1px solid #C6C6C6;
+  width: 8rem;;
+  border: none;
+  background-color: #EDEDED;
   border-radius: 8px;
   font-size: 14px;
   margin-left: 2rem;
@@ -110,7 +110,23 @@
   .filter-form-body{
     width: 35rem;
     margin-Top: -1rem;
-    left: 0.5rem;
+    margin-left: 29rem !important;
+    font-size: 14px;
+    color: #838383;    
+  }
+
+  .filter-date-body{
+    width: 35rem;
+    margin-Top: -1rem;
+    left: 0.5rem !important;
+    font-size: 14px;
+    color: #838383;    
+  }
+
+  .filter-group-body{
+    width: 35rem;
+    margin-Top: -1rem;
+    margin-left: 39.5rem !important;
     font-size: 14px;
     color: #838383;    
   }
@@ -130,10 +146,10 @@
   }
 
   .sweet-loading{
-    margin-top: -14rem;
-    padding: 20% 0 0 48%;
+    margin-top: -11rem;
+    padding: 19% 0 0 48%;
     position: relative;
-    height: 100vh;
+    height: 102vh;
     display: block;
     background-color: rgba(89, 89, 89, 0.9);
     transition: background-color 2s;
