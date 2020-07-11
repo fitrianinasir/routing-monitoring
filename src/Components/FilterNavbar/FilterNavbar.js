@@ -7,7 +7,8 @@ import "./FilterNavbar.css";
 import FilterGrouping from "../FilterGrouping/FilterGrouping";
 
 function FilterNavbar(props) {
-  const { depos, choosenDepo, setChoosenDepo } = useContext(dataContainer);
+  const { depos, choosenDepo, setChoosenDepo, showDate, requestFilter } = useContext(dataContainer);
+
 
   function openDateFilter() {
     let form = document.getElementById("formCollapse");
@@ -31,7 +32,6 @@ function FilterNavbar(props) {
   }
 
   function openDepoFilter() {
-    console.log("call");
     let form = document.getElementById("formCollapse");
     let grouping = document.getElementById("groupingCollapse");
     let date = document.getElementById("dateCollapse");
@@ -56,17 +56,18 @@ function FilterNavbar(props) {
             aria-controls="dateCollapse"
             onClick={openDateFilter}
           >
-            <span>Tanggal</span>
+            <span>{showDate !== undefined ? showDate.from !== undefined ? `${showDate.from} s/d ${showDate.to}` : showDate : 'Tanggal'}</span>
           </button>
           <span onClick={openDepoFilter}>
             <Select
               options={depos}
               value={choosenDepo}
+              className="mr-2"
               onChange={(value) => setChoosenDepo(value)}
             />
           </span>
           <button
-            className="filter-button mt-3"
+            className="filter-button mt-3 ml-4 mr-3"
             type="button"
             data-toggle="collapse"
             id="#formCollapse"
@@ -91,6 +92,9 @@ function FilterNavbar(props) {
             <i class="fas fa-layer-group mr-2"></i>
             <span>Grouping</span>
           </button>
+          <button className="btn btn-primary ml-3 btn-request-filter" onClick={requestFilter}>
+          Terapkan Filter
+        </button>
         </div>
       </div>
 

@@ -23,8 +23,7 @@ function FilterForm(props) {
     setSupplierKeyword,
     supplierData,
     choosenSupplier,
-    setChoosenSupplier,
-    requestFilter
+    setChoosenSupplier
   } = useContext(dataContainer);
 
   
@@ -156,9 +155,7 @@ function FilterForm(props) {
             </tr>
           </tbody>
         </table>
-        <button className="btn btn-primary float-right mt-4 mr-2" onClick={requestFilter}>
-          Terapkan Filter
-        </button>
+       
       </form>
     </div>
   );

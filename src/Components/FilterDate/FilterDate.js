@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Helmet from "react-helmet";
 import DayPicker, { DateUtils } from "react-day-picker";
+import { dataContainer } from "../FilterData/FilterData";
 import "react-day-picker/lib/style.css";
 
 import "./FilterDate.css";
@@ -15,14 +16,20 @@ function FilterDate(props) {
   const [isShowLastMonth, setIsShowLastMonth] = useState(false);
   const [isShowTimeSpan, setIsShowTimeSpan] = useState(false);
   const [selectedDay, setSelectedDay] = useState(new Date());
-  const [selectedDays, setSelectedDays] = useState({
-    from: undefined,
-    to: undefined,
-  });
+  const [selectedDays, setSelectedDays] = useState(initialDate);
+  const { setDate, setShowDate } = useContext(dataContainer);
 
+  // INITIAL DATE
+  function initialDate() {
+    return {
+      from: undefined,
+      to: undefined,
+    };
+  }
   // TODAY CALENDAR
   function handleDayChange(day) {
     setSelectedDay(day);
+    setSelectedDays(initialDate);
   }
 
   function showTodayCalendar() {
@@ -48,6 +55,7 @@ function FilterDate(props) {
       d.setDate(d.getDate() - i);
       return d;
     });
+    setSelectedDay(undefined);
     setSelectedDays({
       from: dates[6],
       to: new Date(),
@@ -71,6 +79,7 @@ function FilterDate(props) {
       d.setDate(d.getDate() - i);
       return d;
     });
+    setSelectedDay(undefined);
     setSelectedDays({
       from: dates[29],
       to: new Date(),
@@ -99,6 +108,7 @@ function FilterDate(props) {
     startDate.setDate(1);
     endDate.setDate(totalDays);
 
+    setSelectedDay(undefined);
     setSelectedDays({
       from: startDate,
       to: endDate,
@@ -126,6 +136,7 @@ function FilterDate(props) {
     let endDate = new Date();
     endDate.setDate(0);
 
+    setSelectedDay(undefined);
     setSelectedDays({
       from: startDate,
       to: endDate,
@@ -151,6 +162,7 @@ function FilterDate(props) {
 
   function handleTimeSpan(day) {
     const range = DateUtils.addDayToRange(day, selectedDays);
+    setSelectedDay(undefined);
     setSelectedDays(range);
   }
 
@@ -159,6 +171,64 @@ function FilterDate(props) {
       from: undefined,
       to: undefined,
     });
+  }
+
+  function filterDate() {
+    if (selectedDay !== undefined) {
+      let convertedDate = selectedDay;
+      let date = convertedDate.getDate();
+      let month = convertedDate.getMonth() + 1;
+      const year = convertedDate.getFullYear();
+      if (date < 10) {
+        date = `0${date}`;
+      }
+      if (month < 10) {
+        month = `0${month}`;
+      }
+      setDate(`${year}-${month}-${date}`);
+      setShowDate(`${date}-${month}-${year}`);
+      console.log(selectedDay);
+    }
+
+    if (selectedDays.from !== undefined) {
+      let convertedDateFrom = selectedDays.from;
+      let convertedDateTo = selectedDays.to;
+
+      let dateFrom = convertedDateFrom.getDate();
+      let monthFrom = convertedDateFrom.getMonth() + 1;
+      const yearFrom = convertedDateFrom.getFullYear();
+      if (dateFrom < 10) {
+        dateFrom = `0${dateFrom}`;
+      }
+      if (monthFrom < 10) {
+        monthFrom = `0${monthFrom}`;
+      }
+
+      let dateTo = convertedDateTo.getDate();
+      let monthTo = convertedDateTo.getMonth() + 1;
+      const yearTo = convertedDateTo.getFullYear();
+      if (dateTo < 10) {
+        dateTo = `0${dateTo}`;
+      }
+      if (monthTo < 10) {
+        monthTo = `0${monthTo}`;
+      }
+
+      setDate({
+        from: `${yearFrom}-${monthFrom}-${dateFrom}`,
+        to: `${yearTo}-${monthTo}-${dateTo}`,
+      });
+      setShowDate({
+        from: `${dateFrom}-${monthFrom}-${yearFrom}`,
+        to: `${dateTo}-${monthTo}-${yearTo}`,
+      });
+    }
+  }
+
+  function cancelDate() {
+    setSelectedDay(undefined);
+    setShowDate(undefined);
+    setDate(undefined);
   }
 
   const buttonActiveStyle = {
@@ -285,8 +355,18 @@ function FilterDate(props) {
       )}
 
       <div className="button-section w-100">
-        <button className="btn btn-light mt-4 mr-2 w-25 float-left text-secondary">Batal</button>
-        <button className="btn btn-primary mt-4 mr-2 w-25 float-right">Pilih</button>
+        <button
+          className="btn btn-light mt-4 mr-2 w-25 float-left text-secondary"
+          onClick={cancelDate}
+        >
+          Batal
+        </button>
+        <button
+          className="btn btn-primary mt-4 mr-2 w-25 float-right"
+          onClick={filterDate}
+        >
+          Pilih
+        </button>
       </div>
     </div>
   );

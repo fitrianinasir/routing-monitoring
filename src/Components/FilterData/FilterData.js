@@ -34,65 +34,17 @@ function FilterData(props) {
   const [depos, setDepos] = useState([]);
   const [choosenDepo, setChoosenDepo] = useState({});
 
+  // DATE
+  const [date, setDate] = useState(undefined);
+  const [showDate, setShowDate] = useState(undefined);
+
+  // GROUP BY
+  const [groupBy, setGroupBy] = useState(undefined);
+
   const API_URL =
     "https://route-monitoring.carakde.id/api_route_monitoring/api";
 
-  function objMapping(obj) {
-    Object.keys(obj).map(function (key, index) {
-      let obj2 = obj[key];
-      Object.keys(obj2).map(function (key, index) {
-        let obj3 = obj2[key];
-        let data = tableData;
-        data.push(obj2[key]);
-        setTableData([...data]);
-        Object.keys(obj3).map(function (key, index) {
-          let obj4 = obj3[key];
-          // console.log('obj4', obj4)
-        });
-      });
-    });
-  }
-
   useEffect(() => {
-    // GET TABLE DATA
-    axios
-      .request({
-        method: "GET",
-        url: `${API_URL}/merchandises`,
-        params: {
-          date_from: "2018-12-03",
-          date_to: "2018-12-17",
-          depo_id: 4,
-          group_by: ["Nama_Manager", "Nama_Supervisor", "Nama_Sales"],
-        },
-        headers: headers,
-      })
-      .then((res) => {
-        // let myObject = res.data.merchandises
-        // Object.keys(myObject).map(function(key, index) {
-        //   console.log(myObject.key[key].length)
-        // });
-        // setTableData(res.data.merchandises);
-        // const myObject = res.data.merchandises;
-        // let size = Object.keys(myObject).length;
-        // if (size >= 1) {
-        //   Object.keys(myObject).map(function(key, index) {
-        //     let myNextObject = myObject[key]
-        //     let size2 = Object.keys(myNextObject).length
-        //     if(size2 >= 1){
-        //       Object.keys(myNextObject).map(function(key, index) {
-        //         // let myNextObject2 = myNextObject[key]
-        //         // let size3 = Object.keys(myNextObject).length
-        //         console.log()
-        //       });
-        //     }
-        //   });
-        // }
-        const myObj = res.data.merchandises;
-        objMapping(myObj);
-      })
-      .catch((err) => console.log(err));
-
     // GET SALESMAN DATA
     if (salesKeyword.length >= 3) {
       setLoading(true);
@@ -194,7 +146,7 @@ function FilterData(props) {
   function getDepos() {
     setLoading(true);
     setChoosenDepo({
-      value: 0,
+      value: undefined,
       label: "Depo",
     });
     axios
@@ -212,7 +164,58 @@ function FilterData(props) {
 
   function requestFilter(e) {
     e.preventDefault();
-    console.log(choosenDepo);
+
+    let salesIDs = choosenSales.map((sales) => sales.value);
+    let supervisorIDs = choosenSupervisor.map((supervisor) => supervisor.value);
+    let managerIDs = choosenManager.map((manager) => manager.value);
+
+    let filterData = {
+      depo_id: choosenDepo.value,
+      group_by: groupBy,
+      date_from: "2018-12-03",
+      date_to: "2018-12-07",
+    };
+
+    // // REQUIRED
+    // if (date !== undefined) {
+    //   if (date.from !== undefined) {
+    //     filterData.date_from = date.from;
+    //     filterData.date_to = date.to;
+    //   } else {
+    //     filterData.date_from = date;
+    //     filterData.date_to = date;
+    //   }
+    // }
+
+    // SALES ID NOT REQUIRED
+    if (salesIDs.length > 0) {
+      filterData.sales_ids = salesIDs;
+    }
+
+    // SUPERVISOR ID NOT REQUIRED
+    if (supervisorIDs.length > 0) {
+      filterData.supervisor_ids = supervisorIDs;
+    }
+
+    // MANAGER ID NOT REQUIRED
+    if (managerIDs.length > 0) {
+      filterData.manager_ids = managerIDs;
+    }
+    getDataTable(filterData);
+  }
+
+  function getDataTable(data) {
+    axios
+      .request({
+        method: "GET",
+        url: `${API_URL}/merchandises`,
+        params: data,
+        headers: headers,
+      })
+      .then((res) => {
+        setTableData(res.data.merchandises);
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -254,7 +257,15 @@ function FilterData(props) {
           choosenDepo,
           setChoosenDepo,
 
+          // DATE
+          date,
+          setDate,
+          showDate,
+          setShowDate,
           requestFilter,
+
+          // GROUP BY
+          setGroupBy,
         }}
       >
         {props.children}
