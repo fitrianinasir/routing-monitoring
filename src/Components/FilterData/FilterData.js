@@ -165,15 +165,22 @@ function FilterData(props) {
   function requestFilter(e) {
     e.preventDefault();
 
+    setLoading(true)
     let salesIDs = choosenSales.map((sales) => sales.value);
     let supervisorIDs = choosenSupervisor.map((supervisor) => supervisor.value);
     let managerIDs = choosenManager.map((manager) => manager.value);
 
+    // let filterData = {
+    //   depo_id: choosenDepo.value,
+    //   group_by: groupBy,
+    //   date_from: "2018-12-03",
+    //   date_to: "2018-12-17",
+    // };
     let filterData = {
-      depo_id: choosenDepo.value,
-      group_by: groupBy,
+      depo_id: 4,
+      group_by: ["Nama_Manager", "Nama_Supervisor", "Nama_Sales"],
       date_from: "2018-12-03",
-      date_to: "2018-12-07",
+      date_to: "2018-12-17",
     };
 
     // // REQUIRED
@@ -213,9 +220,10 @@ function FilterData(props) {
         headers: headers,
       })
       .then((res) => {
+        setLoading(false)
         setTableData(res.data.merchandises);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setLoading(false));
   }
 
   return (
