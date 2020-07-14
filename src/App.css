@@ -54,25 +54,18 @@
 
 /* FILTER NAVBAR COMPONENT START */
 
-.filter-button{
-  background-color: transparent;
-  width: 8rem;;
-  border: none;
-  background-color: #EDEDED;
-  border-radius: 8px;
-  font-size: 14px;
-  
-}
+
 
 /* FILTER NAVBAR COMPONENT END */
 
 /* FILTER FORM COMPONENT START */
 .filter-form-body{
-  left: 0.5rem;
-  font-size: 12px;
+  left: 21rem;
+  font-size: 10px;
   color: #838383;
-  margin: -1rem 2rem 5rem 0;
+  margin-top: -4rem;
 }
+
 
 .filter-form-body table{
   margin-left: -1rem;
@@ -92,32 +85,57 @@
   font-size: 10px;
 }
 
+.filter-date-body{
+  margin-Top: -4rem;
+  left: 0.5rem !important;
+  font-size: 10px;
+  color: #838383;    
+}
+
+
+.filter-date-body button{
+  font-size: 10px;
+}
 .multi-select{
   width: 10rem;
 }
 
+.filter-group-body{
+  margin-Top: -4rem;
+  margin-left: 31rem !important;
+  font-size: 14px;
+  color: #838383;    
+}
+
 .sweet-loading{
+  width: 100vh;
   margin-top: -17rem;
   padding: 80% 0 0 40%;
   position: relative;
-  height: 102vh;
+  height: 100vh;
   display: block;
   background-color: rgba(89, 89, 89, 0.9);
   transition: background-color 2s;
 }
 
+
+
 @media(min-width:1024px){
   .filter-form-body{
     width: 35rem;
-    margin-Top: -1rem;
-    margin-left: 29rem !important;
+    margin-Top: -5rem;
+    margin-left: 8rem !important;
     font-size: 14px;
     color: #838383;    
   }
 
+
+.filter-date-body button{
+  font-size: 14px;
+}
   .filter-date-body{
     width: 35rem;
-    margin-Top: -1rem;
+    margin-Top: -5rem;
     left: 0.5rem !important;
     font-size: 14px;
     color: #838383;    
@@ -125,8 +143,8 @@
 
   .filter-group-body{
     width: 35rem;
-    margin-Top: -1rem;
-    margin-left: 39.5rem !important;
+    margin-Top: -5rem;
+    margin-left: 40.5rem !important;
     font-size: 14px;
     color: #838383;    
   }
@@ -146,7 +164,8 @@
   }
 
   .sweet-loading{
-    margin-top: -11rem;
+    width: 100vw;
+    margin-top: -16rem;
     padding: 19% 0 0 48%;
     position: relative;
     height: 102vh;

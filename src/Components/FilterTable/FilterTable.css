@@ -1,14 +1,74 @@
-.filter-table{
-  margin: 3rem 2rem 0 0rem; 
+.filter-table {
+  margin: 3rem 2rem 0 0rem;
 }
 
-.table-main-container{
+.table-main-container {
   display: grid;
-  grid-template-columns: repeat(2,2fr);
+  grid-template-columns: repeat(2, 2fr);
+  width: 40rem;
+  font-size: 12px;
 }
-.table-main-content{
+/* .table-main-content {
   margin: 5px;
   border-radius: 5px;
   width: 35rem;
   text-align: left;
+} */
+
+
+.grid-accordion{
+  display: grid;
+  grid-template-columns: repeat(2, 2fr);
+  text-align: left;
+}
+
+.td-value{
+  width: 10rem
+}
+
+.manager-style{
+  background-color: brown;
+  border-bottom: none;
+  border-top: none;
+  color: white
+}
+
+.supervisor-style{
+  border-bottom: none;
+  border-top: none;
+  background-color: coral;
+}
+
+.salesman-style{
+  border-bottom: none;
+  border-top: none;
+  background-color: burlywood;
+}
+
+.date-style{
+  border-bottom: none;
+  border-top: none;
+  background-color: #F7F7F7;
+}
+
+.accordion-btn{
+  font-size: 12px;
+  margin-left: -1rem;
+  color : #D4D4D4;
+ 
+}
+
+.btn.focus, .btn:focus{
+  box-shadow: none !important;
+}
+
+
+.img-container{
+  display: grid;
+  grid-template-columns: repeat(2, 2fr);
+  margin: 10px 0 14px 0;
+}
+
+.accordion > .card > .card-header{
+  background-color: transparent;
 }

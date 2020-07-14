@@ -7,8 +7,13 @@ import "./FilterNavbar.css";
 import FilterGrouping from "../FilterGrouping/FilterGrouping";
 
 function FilterNavbar(props) {
-  const { depos, choosenDepo, setChoosenDepo, showDate, requestFilter } = useContext(dataContainer);
-
+  const {
+    depos,
+    choosenDepo,
+    setChoosenDepo,
+    showDate,
+    requestFilter,
+  } = useContext(dataContainer);
 
   function openDateFilter() {
     let form = document.getElementById("formCollapse");
@@ -56,7 +61,13 @@ function FilterNavbar(props) {
             aria-controls="dateCollapse"
             onClick={openDateFilter}
           >
-            <span>{showDate !== undefined ? showDate.from !== undefined ? `${showDate.from} s/d ${showDate.to}` : showDate : 'Tanggal'}</span>
+            <span>
+              {showDate !== undefined
+                ? showDate.from !== undefined
+                  ? `${showDate.from} s/d ${showDate.to}`
+                  : showDate
+                : "Tanggal"}
+            </span>
           </button>
           <span onClick={openDepoFilter}>
             <Select
@@ -89,24 +100,38 @@ function FilterNavbar(props) {
             aria-controls="groupingCollapse"
             onClick={openGroupingFilter}
           >
-            <i class="fas fa-layer-group mr-2"></i>
+            <i className="fas fa-layer-group mr-2"></i>
             <span>Grouping</span>
           </button>
-          <button className="btn btn-primary ml-3 btn-request-filter" onClick={requestFilter}>
-          Terapkan Filter
-        </button>
+          <button
+            className="btn btn-primary ml-3 btn-request-filter"
+            onClick={requestFilter}
+          >
+            Terapkan Filter
+          </button>
+        </div>
+        <div className="color-container d-flex">
+          <div>
+            <div className="manager-color">Manager</div>
+          </div>
+          <div>
+            <div className="spv-color">Supervisor</div>
+          </div>
+          <div>
+            <div className="sales-color">Salesman</div>
+          </div>
         </div>
       </div>
 
-      <div class="collapse position-absolute" id="formCollapse">
+      <div className="collapse position-absolute" id="formCollapse">
         <FilterForm />
       </div>
 
-      <div class="collapse position-absolute" id="dateCollapse">
+      <div className="collapse position-absolute" id="dateCollapse">
         <FilterDate />
       </div>
 
-      <div class="collapse position-absolute" id="groupingCollapse">
+      <div className="collapse position-absolute" id="groupingCollapse">
         <FilterGrouping />
       </div>
     </div>

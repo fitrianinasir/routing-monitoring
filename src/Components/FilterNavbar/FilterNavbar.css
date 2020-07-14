@@ -1,3 +1,6 @@
+.filter-navbar {
+  width: 45rem;
+}
 .button-container {
   display: flex;
 }
@@ -6,10 +9,10 @@
   background-color: transparent;
   width: 12rem;
   text-align: left;
-  padding: auto 10px;
+  padding: auto 11px;
   border: 1px solid #c6c6c6;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 11px;
   margin-left: 2rem;
   color: #838383;
 }
@@ -17,6 +20,7 @@
 .css-yk16xz-control,
 .css-1pahdxg-control {
   height: 3rem;
+  font-size: 11px;
   width: 12rem;
   margin: 1rem -1rem 0 1rem;
 }
@@ -27,10 +31,125 @@
 
 .css-26l3qy-menu {
   margin-left: 1rem;
+  font-size: 11px;
 }
 
-.btn-request-filter{
+.btn-request-filter {
   margin-top: 1.3rem;
-  height: 2.3rem ;
-  font-size: 14px;
+  height: 2.3rem;
+  width: 10rem;
+  font-size: 10px;
+}
+
+.color-container {
+  margin-top: 1rem;
+  margin-left: 2rem;
+}
+
+.manager-color,
+.spv-color,
+.sales-color {
+  padding: 11px;
+  margin-right: 11px;
+  border-radius: 3px;
+  color: white;
+  font-size: 11px;
+}
+.manager-color {
+  background-color: brown;
+}
+
+.spv-color {
+  background-color: coral;
+}
+
+.sales-color {
+  background-color: burlywood;
+}
+
+.filter-button {
+  background-color: transparent;
+  width: 10rem;
+  border: none;
+  background-color: #ededed;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+@media (min-width: 1024px) {
+  .filter-navbar {
+    width: 250%;
+  }
+  .button-container {
+    display: flex;
+  }
+
+  .filter-date {
+    background-color: transparent;
+    width: 12rem;
+    text-align: left;
+    padding: auto 11px;
+    border: 1px solid #c6c6c6;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-left: 2rem;
+    color: #838383;
+  }
+
+  .css-yk16xz-control,
+  .css-1pahdxg-control {
+    height: 3rem;
+    width: 12rem;
+    margin: 1rem -1rem 0 1rem;
+    font-size: 14px;
+  }
+
+  .css-1uccc91-singleValue {
+    color: #838383 !important;
+  }
+
+  .css-26l3qy-menu {
+    margin-left: 1rem;
+    font-size: 14px;
+  }
+
+  .filter-button {
+    background-color: transparent;
+    width: 10rem;
+    border: none;
+    background-color: #ededed;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .btn-request-filter {
+    margin-top: 1.3rem;
+    height: 2.3rem;
+    font-size: 14px;
+  }
+
+  .color-container {
+    margin-top: 1rem;
+    margin-left: 2rem;
+  }
+
+  .manager-color,
+  .spv-color,
+  .sales-color {
+    padding: 11px;
+    margin-right: 11px;
+    border-radius: 3px;
+    color: white;
+    font-size: 14px;
+  }
+  .manager-color {
+    background-color: brown;
+  }
+
+  .spv-color {
+    background-color: coral;
+  }
+
+  .sales-color {
+    background-color: burlywood;
+  }
 }

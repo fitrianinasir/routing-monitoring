@@ -25,3 +25,34 @@
 .reset-button{
   font-size: 12px;
 }
+@media (min-width: 1024px) {
+  .button-options{
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+
+  
+  .btn-items{
+    font-size: 14px;
+    background-color: transparent;
+    border: 1px solid #acacac;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    color: #838383;
+  }
+  
+  
+  .date-container .DayPickerInput{
+    float: left;
+    /* margin */
+  }
+  
+  .DayPicker-wrapper{
+    font-size: 14px !important;
+  }
+  
+  .reset-button{
+    font-size: 12px;
+  }
+}

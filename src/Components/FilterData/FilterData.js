@@ -1,4 +1,6 @@
 import React, { useEffect, useState, createContext } from "react";
+import swal from 'sweetalert';
+import {API_URL} from '../BaseURL/URL'
 import axios from "axios";
 
 export const dataContainer = createContext();
@@ -40,9 +42,6 @@ function FilterData(props) {
 
   // GROUP BY
   const [groupBy, setGroupBy] = useState(undefined);
-
-  const API_URL =
-    "https://route-monitoring.carakde.id/api_route_monitoring/api";
 
   useEffect(() => {
     // GET SALESMAN DATA
@@ -170,29 +169,23 @@ function FilterData(props) {
     let supervisorIDs = choosenSupervisor.map((supervisor) => supervisor.value);
     let managerIDs = choosenManager.map((manager) => manager.value);
 
-    // let filterData = {
-    //   depo_id: choosenDepo.value,
-    //   group_by: groupBy,
-    //   date_from: "2018-12-03",
-    //   date_to: "2018-12-17",
-    // };
     let filterData = {
-      depo_id: 4,
-      group_by: ["Nama_Manager", "Nama_Supervisor", "Nama_Sales"],
+      depo_id: choosenDepo.value,
+      group_by: groupBy,
       date_from: "2018-12-03",
       date_to: "2018-12-17",
     };
 
-    // // REQUIRED
-    // if (date !== undefined) {
-    //   if (date.from !== undefined) {
-    //     filterData.date_from = date.from;
-    //     filterData.date_to = date.to;
-    //   } else {
-    //     filterData.date_from = date;
-    //     filterData.date_to = date;
-    //   }
-    // }
+    // REQUIRED
+    if (date !== undefined) {
+      if (date.from !== undefined) {
+        filterData.date_from = date.from;
+        filterData.date_to = date.to;
+      } else {
+        filterData.date_from = date;
+        filterData.date_to = date;
+      }
+    }
 
     // SALES ID NOT REQUIRED
     if (salesIDs.length > 0) {
@@ -220,10 +213,17 @@ function FilterData(props) {
         headers: headers,
       })
       .then((res) => {
+        console.log('call')
+        console.log(res)
         setLoading(false)
         setTableData(res.data.merchandises);
       })
-      .catch((err) => setLoading(false));
+      .catch((err) => {
+        if(err.response.statusText === 'Unprocessable Entity'){
+          swal("Gagal!", "Data tanggal, depo, dan grouping harus diisi", "error");
+        }
+        setLoading(false)
+      });
   }
 
   return (

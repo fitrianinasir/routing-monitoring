@@ -38,7 +38,7 @@ function FilterGrouping(props) {
 
   return (
     <div className="card card-body shadow ml-5 filter-group-body">
-      <div className="option mt-4 text-left">
+      <div className="option mt-2 text-left">
         <button
           value="team"
           className={
