@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useParams } from "react-router";
 import Select from "react-select";
 import FilterForm from "../FilterForm/FilterForm";
 import FilterDate from "../FilterDate/FilterDate";
@@ -13,7 +14,11 @@ function FilterNavbar(props) {
     setChoosenDepo,
     showDate,
     requestFilter,
+    setTableData,
+    setTableDataRekap,
   } = useContext(dataContainer);
+
+  const { urlName } = useParams();
 
   function openDateFilter() {
     let form = document.getElementById("formCollapse");
@@ -45,11 +50,23 @@ function FilterNavbar(props) {
     date.classList.remove("show");
   }
 
+  function backHandler(){
+    setTableData([])
+    setTableDataRekap([])
+    window.location.href = '/home'
+  }
+
   return (
     <div>
       <div className="filter-navbar text-left p-4 shadow">
-        <i className="h5 fas fa-arrow-left"></i>
-        <h5 className="d-inline ml-3">Merchandise Reporting</h5>
+          <i className="h5 fas fa-arrow-left" onClick={backHandler}></i>
+        <h5 className="d-inline ml-3">
+          {urlName === "report"
+            ? "Merchandise Reporting"
+            : urlName === "rekap"
+            ? "Merchandise Report Rekap"
+            : ""}
+        </h5>
         <div className="button-container">
           <button
             className="d-block mt-3 filter-date"
@@ -105,7 +122,7 @@ function FilterNavbar(props) {
           </button>
           <button
             className="btn btn-primary ml-3 btn-request-filter"
-            onClick={requestFilter}
+            onClick={() => requestFilter(urlName)}
           >
             Terapkan Filter
           </button>

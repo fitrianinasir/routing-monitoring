@@ -1,39 +1,110 @@
 import React, { useState, useContext } from "react";
+import { useParams } from "react-router";
 import { dataContainer } from "../FilterData/FilterData";
 
 function FilterGrouping(props) {
-  const { setGroupBy } = useContext(dataContainer);
+  const {
+    setIsTeamData,
+    setIsCustomerData,
+    setIsSupplierData,
+    setIsProductData,
+    setGroupBy,
+  } = useContext(dataContainer);
+
   const [isTeam, setIsTeam] = useState(false);
   const [isCustomer, setIsCustomer] = useState(false);
   const [isSupplier, setIsSupplier] = useState(false);
   const [isProduct, setIsProduct] = useState(false);
 
-  function getGrouping(value) {
+  const [grouping] = useState([]);
+  const { urlName } = useParams();
+
+  async function getGrouping(value) {
+    let group = grouping;
     if (value === "team") {
-      setIsTeam(true);
-      setIsCustomer(false);
-      setIsSupplier(false);
-      setIsProduct(false);
-      setGroupBy(["Nama_Manager", "Nama_Supervisor", "Nama_Sales"]);
+      setIsTeam(!isTeam);
+      if (isTeam) {
+        if (urlName === "report") {
+          group = group.filter(
+            (data) =>
+              data !== "Nama_Manager" &&
+              data !== "Nama_Supervisor" &&
+              data !== "Nama_Sales"
+          );
+          setIsTeamData(false)
+        } else if (urlName === "rekap") {
+          group = group.filter((data) => data !== "team");
+          setIsTeamData(false)
+        }
+      } else {
+        if (urlName === "report") {
+          group.push("Nama_Manager", "Nama_Supervisor", "Nama_Sales");
+          setIsTeamData(true)
+        } else if (urlName === "rekap") {
+          group.push("team");
+          setIsTeamData(true)
+        }
+      }
     } else if (value === "customer") {
-      setIsTeam(false);
-      setIsCustomer(true);
-      setIsSupplier(false);
-      setIsProduct(false);
-      setGroupBy("Nama_Pelanggan");
+      setIsCustomer(!isCustomer);
+      if (isCustomer) {
+        if (urlName === "report") {
+          group = group.filter((data) => data !== "Nama_Pelanggan");
+          setIsCustomerData(false)
+        } else if (urlName === "rekap") {
+          group = group.filter((data) => data !== "pelanggan");
+          setIsCustomerData(false)
+        }
+      } else {
+        if (urlName === "report") {
+          group.push("Nama_Pelanggan");
+          setIsCustomerData(true)
+        } else if (urlName === "rekap") {
+          group.push("pelanggan");
+          setIsCustomerData(true)
+        }
+      }
     } else if (value === "supplier") {
-      setIsTeam(false);
-      setIsCustomer(false);
-      setIsSupplier(true);
-      setIsProduct(false);
-      setGroupBy("Nama_Supplier");
+      setIsSupplier(!isSupplier);
+      if (isSupplier) {
+        if (urlName === "report") {
+          group = group.filter((data) => data !== "Nama_Supplier");
+          setIsSupplierData(false)
+        } else if (urlName === "rekap") {
+          group = group.filter((data) => data !== "supplier");
+          setIsSupplierData(false)
+        }
+      } else {
+        if (urlName === "report") {
+          group.push("Nama_Supplier");
+          setIsSupplierData(true)
+        } else if (urlName === "rekap") {
+          group.push("supplier");
+          setIsSupplierData(true)
+        }
+      }
     } else if (value === "product") {
-      setIsTeam(false);
-      setIsCustomer(false);
-      setIsSupplier(false);
-      setIsProduct(true);
-      setGroupBy("Nama_Barang");
+      setIsProduct(!isProduct);
+      if (isProduct) {
+        if (urlName === "report") {
+          group = group.filter((data) => data !== "Nama_Barang");
+          setIsProductData(false)
+        } else if (urlName === "rekap") {
+          group = group.filter((data) => data !== "barang");
+          setIsProductData(false)
+        }
+      } else {
+        if (urlName === "report") {
+          group.push("Nama_Barang");
+          setIsProductData(true)
+        } else if (urlName === "rekap") {
+          group.push("barang");
+          setIsProductData(true)
+        }
+      }
     }
+    console.log("group", group);
+    setGroupBy(group);
   }
 
   return (

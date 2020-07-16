@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createContext } from "react";
-import swal from 'sweetalert';
-import {API_URL} from '../BaseURL/URL'
+import swal from "sweetalert";
+import { API_URL } from "../BaseURL/URL";
 import axios from "axios";
 
 export const dataContainer = createContext();
@@ -13,7 +13,14 @@ const headers = {
 
 function FilterData(props) {
   const [loading, setLoading] = useState(false);
+  const [isTeamData, setIsTeamData] = useState(false)
+  const [isCustomerData, setIsCustomerData] = useState(false)
+  const [isSupplierData, setIsSupplierData] = useState(false)
+  const [isProductData, setIsProductData] = useState(false)
   const [tableData, setTableData] = useState([]);
+  const [tableDataRekap, setTableDataRekap] = useState([])
+  const [isFilterClicked, setIsFilterClicked] = useState(false);
+  const [isFilterRekapClicked, setIsFilterRekapClicked] = useState(false);
 
   // EMPLOYEES
   const [salesKeyword, setSalesKeyword] = useState("");
@@ -31,7 +38,6 @@ function FilterData(props) {
   const [choosenManager, setChoosenManager] = useState([]);
   const [choosenTrip, setChoosenTrip] = useState([]);
   const [choosenSupplier, setChoosenSupplier] = useState([]);
-
   // DEPO
   const [depos, setDepos] = useState([]);
   const [choosenDepo, setChoosenDepo] = useState({});
@@ -53,7 +59,6 @@ function FilterData(props) {
           { headers }
         )
         .then((res) => {
-          console.log(res);
           let salesman = res.data.employees.map((employee) => ({
             value: employee.id,
             label: employee.name,
@@ -122,7 +127,6 @@ function FilterData(props) {
       axios
         .get(`${API_URL}/suppliers/search?code=${supplierKeyword}`, { headers })
         .then((res) => {
-          console.log(res);
           let suppliers = res.data.suppliers.map((supplier) => ({
             value: supplier.id,
             label: supplier.name,
@@ -161,10 +165,10 @@ function FilterData(props) {
       .catch((err) => setLoading(false));
   }
 
-  function requestFilter(e) {
-    e.preventDefault();
-
-    setLoading(true)
+  function requestFilter(name) {
+    console.log(name)
+    
+    setLoading(true);
     let salesIDs = choosenSales.map((sales) => sales.value);
     let supervisorIDs = choosenSupervisor.map((supervisor) => supervisor.value);
     let managerIDs = choosenManager.map((manager) => manager.value);
@@ -177,15 +181,15 @@ function FilterData(props) {
     };
 
     // REQUIRED
-    if (date !== undefined) {
-      if (date.from !== undefined) {
-        filterData.date_from = date.from;
-        filterData.date_to = date.to;
-      } else {
-        filterData.date_from = date;
-        filterData.date_to = date;
-      }
-    }
+    // if (date !== undefined) {
+    //   if (date.from !== undefined) {
+    //     filterData.date_from = date.from;
+    //     filterData.date_to = date.to;
+    //   } else {
+    //     filterData.date_from = date;
+    //     filterData.date_to = date;
+    //   }
+    // }
 
     // SALES ID NOT REQUIRED
     if (salesIDs.length > 0) {
@@ -201,7 +205,18 @@ function FilterData(props) {
     if (managerIDs.length > 0) {
       filterData.manager_ids = managerIDs;
     }
-    getDataTable(filterData);
+    console.log(filterData)
+
+    if(name === 'report'){
+      console.log(filterData)
+      setIsFilterClicked(true)
+      setIsFilterRekapClicked(false)
+      getDataTable(filterData)
+    }else if(name === 'rekap'){
+      setIsFilterClicked(false)
+      setIsFilterRekapClicked(true)
+      getDataTableRekap(filterData)
+    }
   }
 
   function getDataTable(data) {
@@ -213,16 +228,45 @@ function FilterData(props) {
         headers: headers,
       })
       .then((res) => {
-        console.log('call')
-        console.log(res)
-        setLoading(false)
+        console.log(res.data.merchandises)
         setTableData(res.data.merchandises);
+        setLoading(false);
       })
       .catch((err) => {
-        if(err.response.statusText === 'Unprocessable Entity'){
-          swal("Gagal!", "Data tanggal, depo, dan grouping harus diisi", "error");
+        if (err.response.statusText === "Unprocessable Entity") {
+          swal(
+            "Gagal!",
+            "Data tanggal, depo, dan grouping harus diisi",
+            "error"
+          );
         }
-        setLoading(false)
+        setLoading(false);
+      });
+  }
+
+
+  function getDataTableRekap(data) {
+    axios
+      .request({
+        method: "GET",
+        url: `${API_URL}/merchandises/rekap`,
+        params: data,
+        headers: headers,
+      })
+      .then((res) => {
+        console.log(res.data.merchandises_rekap)
+        setTableDataRekap(res.data.merchandises_rekap);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (err.response.statusText === "Unprocessable Entity") {
+          swal(
+            "Gagal!",
+            "Data tanggal, depo, dan grouping harus diisi",
+            "error"
+          );
+        }
+        setLoading(false);
       });
   }
 
@@ -234,6 +278,13 @@ function FilterData(props) {
 
           // table data
           tableData,
+          tableDataRekap,
+          setTableData,
+          setTableDataRekap,
+          isFilterClicked,
+          isFilterRekapClicked,
+
+          
           // employee
           setSalesKeyword,
           setSupervisorKeyword,
@@ -273,6 +324,14 @@ function FilterData(props) {
           requestFilter,
 
           // GROUP BY
+          isTeamData,
+          isCustomerData,
+          isSupplierData,
+          isProductData,
+          setIsTeamData,
+          setIsCustomerData,
+          setIsSupplierData,
+          setIsProductData,
           setGroupBy,
         }}
       >

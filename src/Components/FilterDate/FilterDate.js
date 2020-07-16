@@ -166,12 +166,7 @@ function FilterDate(props) {
     setSelectedDays(range);
   }
 
-  function resetTimeSpan() {
-    setSelectedDays({
-      from: undefined,
-      to: undefined,
-    });
-  }
+
 
   function filterDate() {
     if (selectedDay !== undefined) {
@@ -187,7 +182,6 @@ function FilterDate(props) {
       }
       setDate(`${year}-${month}-${date}`);
       setShowDate(`${date}-${month}-${year}`);
-      console.log(selectedDay);
     }
 
     if (selectedDays.from !== undefined) {
@@ -229,6 +223,10 @@ function FilterDate(props) {
     setSelectedDay(undefined);
     setShowDate(undefined);
     setDate(undefined);
+    setSelectedDays({
+      from: undefined,
+      to: undefined,
+    });
   }
 
   const buttonActiveStyle = {
@@ -302,24 +300,6 @@ function FilterDate(props) {
       isShowLastMonth ||
       isShowTimeSpan ? (
         <div className="RangeExample">
-          <p>
-            {!from && !to && "Please select the first day"}
-            {from && !to && "Please select the last day"}
-            {from &&
-              to &&
-              `Selected from ${from.toLocaleDateString()} to
-                ${to.toLocaleDateString()}`}
-            {isShowTimeSpan && from && to ? (
-              <button
-                className="link btn btn-primary reset-button ml-1"
-                onClick={resetTimeSpan}
-              >
-                Reset
-              </button>
-            ) : (
-              ""
-            )}
-          </p>
           <DayPicker
             className="Selectable"
             numberOfMonths={numberOfMonths}
