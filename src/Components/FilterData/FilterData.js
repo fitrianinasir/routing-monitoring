@@ -174,7 +174,8 @@ function FilterData(props) {
     let managerIDs = choosenManager.map((manager) => manager.value);
 
     let filterData = {
-      depo_id: choosenDepo.value,
+      // depo_id: choosenDepo.value,
+      depo_id : 4,
       group_by: groupBy,
       date_from: "2018-12-03",
       date_to: "2018-12-17",
@@ -332,6 +333,7 @@ function FilterData(props) {
           setIsCustomerData,
           setIsSupplierData,
           setIsProductData,
+          groupBy,
           setGroupBy,
         }}
       >

@@ -7,6 +7,7 @@ import "./FilterTable.css";
 function FilterTable(props) {
   const {
     isTeamData,
+    groupBy
   } = useContext(dataContainer);
   const [tableData, setTableData] = useState([]);
   const [salesCol, setSalesCol] = useState([]);
@@ -17,6 +18,7 @@ function FilterTable(props) {
   let DATA = props.tableData;
   let KEY = props.keyData;
   useEffect(() => {
+    console.log(groupBy)
     if (KEY === "report") {
       // TRANSFORM JSON
       let filterDataJSON = Object.keys(DATA).map((item, i) => {
@@ -132,7 +134,7 @@ function FilterTable(props) {
   return (
     <div>
       <div className="filter-table">
-        {tableData.length > 0 ? (
+        {/* {tableData.length > 0 ? (
           <table border="1" cellPadding="15">
             <tbody>
               {isTeamData ? (
@@ -373,7 +375,7 @@ function FilterTable(props) {
           </table>
         ) : (
           ""
-        )}
+        )} */}
       </div>
     </div>
   );

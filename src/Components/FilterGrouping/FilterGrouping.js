@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useParams } from "react-router";
 import { dataContainer } from "../FilterData/FilterData";
+import { useEffect } from "react";
 
 function FilterGrouping(props) {
   const {
@@ -11,101 +12,50 @@ function FilterGrouping(props) {
     setGroupBy,
   } = useContext(dataContainer);
 
+  const [key, setKey] = useState("");
   const [isTeam, setIsTeam] = useState(false);
   const [isCustomer, setIsCustomer] = useState(false);
   const [isSupplier, setIsSupplier] = useState(false);
   const [isProduct, setIsProduct] = useState(false);
 
-  const [grouping] = useState([]);
+  const [grouping, setGrouping] = useState([]);
   const { urlName } = useParams();
 
-  async function getGrouping(value) {
-    let group = grouping;
-    if (value === "team") {
-      setIsTeam(!isTeam);
+  useEffect(() => {
+    let group = [...grouping];
+    if (key === "team") {
       if (isTeam) {
-        if (urlName === "report") {
-          group = group.filter(
-            (data) =>
-              data !== "Nama_Manager" &&
-              data !== "Nama_Supervisor" &&
-              data !== "Nama_Sales"
-          );
-          setIsTeamData(false)
-        } else if (urlName === "rekap") {
-          group = group.filter((data) => data !== "team");
-          setIsTeamData(false)
-        }
+        group.push("Nama_Manager", "Nama_Supervisor", "Nama_Sales");
       } else {
-        if (urlName === "report") {
-          group.push("Nama_Manager", "Nama_Supervisor", "Nama_Sales");
-          setIsTeamData(true)
-        } else if (urlName === "rekap") {
-          group.push("team");
-          setIsTeamData(true)
-        }
+        let removeItem = ["Nama_Manager", "Nama_Supervisor", "Nama_Sales"];
+        group = group.filter((i) => !removeItem.includes(i));
       }
-    } else if (value === "customer") {
-      setIsCustomer(!isCustomer);
+    } else if (key === "customer") {
       if (isCustomer) {
-        if (urlName === "report") {
-          group = group.filter((data) => data !== "Nama_Pelanggan");
-          setIsCustomerData(false)
-        } else if (urlName === "rekap") {
-          group = group.filter((data) => data !== "pelanggan");
-          setIsCustomerData(false)
-        }
+        group.push("Nama_Pelanggan");
       } else {
-        if (urlName === "report") {
-          group.push("Nama_Pelanggan");
-          setIsCustomerData(true)
-        } else if (urlName === "rekap") {
-          group.push("pelanggan");
-          setIsCustomerData(true)
-        }
+        let removeItem = ["Nama_Pelanggan"];
+        group = group.filter((i) => !removeItem.includes(i));
       }
-    } else if (value === "supplier") {
-      setIsSupplier(!isSupplier);
+    } else if (key === "supplier") {
       if (isSupplier) {
-        if (urlName === "report") {
-          group = group.filter((data) => data !== "Nama_Supplier");
-          setIsSupplierData(false)
-        } else if (urlName === "rekap") {
-          group = group.filter((data) => data !== "supplier");
-          setIsSupplierData(false)
-        }
+        group.push("Nama_Supplier");
       } else {
-        if (urlName === "report") {
-          group.push("Nama_Supplier");
-          setIsSupplierData(true)
-        } else if (urlName === "rekap") {
-          group.push("supplier");
-          setIsSupplierData(true)
-        }
+        let removeItem = ["Nama_Supplier"];
+        group = group.filter((i) => !removeItem.includes(i));
       }
-    } else if (value === "product") {
-      setIsProduct(!isProduct);
+    } else if (key === "product") {
       if (isProduct) {
-        if (urlName === "report") {
-          group = group.filter((data) => data !== "Nama_Barang");
-          setIsProductData(false)
-        } else if (urlName === "rekap") {
-          group = group.filter((data) => data !== "barang");
-          setIsProductData(false)
-        }
+        group.push("Nama_Barang");
       } else {
-        if (urlName === "report") {
-          group.push("Nama_Barang");
-          setIsProductData(true)
-        } else if (urlName === "rekap") {
-          group.push("barang");
-          setIsProductData(true)
-        }
+        let removeItem = ["Nama_Barang"];
+        group = group.filter((i) => !removeItem.includes(i));
       }
     }
-    console.log("group", group);
-    setGroupBy(group);
-  }
+
+    console.log(group);
+    setGrouping(group);
+  }, [key, isTeam, isCustomer, isSupplier, isProduct]);
 
   return (
     <div className="card card-body shadow ml-5 filter-group-body">
@@ -117,7 +67,10 @@ function FilterGrouping(props) {
               ? "bg-primary text-light d-inline mr-1 option-item"
               : "bg-light d-inline mr-1 option-item"
           }
-          onClick={(e) => getGrouping(e.target.value)}
+          onClick={(e) => {
+            setIsTeam(!isTeam);
+            setKey(e.target.value);
+          }}
         >
           Team
         </button>
@@ -128,7 +81,10 @@ function FilterGrouping(props) {
               ? "bg-primary text-light d-inline mr-1 option-item"
               : "bg-light d-inline mr-1 option-item"
           }
-          onClick={(e) => getGrouping(e.target.value)}
+          onClick={(e) => {
+            setIsCustomer(!isCustomer);
+            setKey(e.target.value);
+          }}
         >
           Customer
         </button>
@@ -139,7 +95,10 @@ function FilterGrouping(props) {
               ? "bg-primary text-light d-inline mr-1 option-item"
               : "bg-light d-inline mr-1 option-item"
           }
-          onClick={(e) => getGrouping(e.target.value)}
+          onClick={(e) => {
+            setIsSupplier(!isSupplier);
+            setKey(e.target.value);
+          }}
         >
           Supplier
         </button>
@@ -150,7 +109,10 @@ function FilterGrouping(props) {
               ? "bg-primary text-light d-inline mr-1 option-item"
               : "bg-light d-inline mr-1 option-item"
           }
-          onClick={(e) => getGrouping(e.target.value)}
+          onClick={(e) => {
+            setIsProduct(!isProduct);
+            setKey(e.target.value);
+          }}
         >
           Product
         </button>
